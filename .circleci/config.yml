@@ -5,15 +5,13 @@ orbs:
 
 jobs:
   lint:
-    executor:
-      name: android/android # Docker Executor https://circleci.com/developer/ja/orbs/orb/circleci/android#executors-android
-      sdk-version: "30"
+    docker:
+      - image: cimg/android:2021.10.2
+    resource_class: xlarge
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run:
-          name: Run ktlint
-          command: ./gradlew lint
+      - run: ./gradlew lint
       - android/save-gradle-cache
 
 workflows:
