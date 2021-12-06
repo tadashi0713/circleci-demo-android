@@ -4,26 +4,19 @@ orbs:
   android: circleci/android@1.0.3
 
 jobs:
-  build-and-test:
-    executor:
-      name: android/android-machine
-
+  lint:
+    executor: android/android # Docker Executor https://circleci.com/developer/ja/orbs/orb/circleci/android#executors-android
     steps:
       - checkout
-
-      - android/run-tests:
-          test-command: ./gradlew lint testDebug --continue
-
-      - android/start-emulator-and-run-tests:
-          test-command: ./gradlew connectedDebugAndroidTest
-          system-image: system-images;android-25;google_apis;x86
-
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - run:
-          name: Assemble release build
-          command: |
-            ./gradlew assembleRelease
+          name: Run ktlint
+          command: ./gradlew lint
+      - android/save-gradle-cache
+      - android/save-build-cache
 
 workflows:
-  sample:
+  main:
     jobs:
-      - build-and-test
+      - lint
