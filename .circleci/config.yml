@@ -5,7 +5,9 @@ orbs:
 
 jobs:
   lint:
-    executor: android/android # Docker Executor https://circleci.com/developer/ja/orbs/orb/circleci/android#executors-android
+    executor:
+      name: android/android # Docker Executor https://circleci.com/developer/ja/orbs/orb/circleci/android#executors-android
+      sdk-version: "30"
     steps:
       - checkout
       - android/restore-gradle-cache
