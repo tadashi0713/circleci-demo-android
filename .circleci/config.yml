@@ -14,6 +14,16 @@ jobs:
       - run: ./gradlew lint
       - android/save-gradle-cache
 
+  beta:
+    docker:
+      - image: cimg/android:2021.10.2
+    resource_class: xlarge
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - run: ./gradlew lint
+      - android/save-gradle-cache
+
 workflows:
   main:
     jobs:
