@@ -18,7 +18,7 @@ jobs:
   beta:
     docker:
       - image: cimg/android:2021.10.2
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -32,4 +32,6 @@ workflows:
   main:
     jobs:
       - lint
-      - beta
+      - beta:
+          context:
+            - mobile
