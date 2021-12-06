@@ -18,7 +18,7 @@ jobs:
   beta:
     docker:
       - image: cimg/android:2021.10.2
-    resource_class: 2xlarge
+    resource_class: xlarge
     steps:
       - checkout
       - android/restore-gradle-cache
