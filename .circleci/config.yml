@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@1.0.3
+  ruby: circleci/ruby@1.2.0
 
 jobs:
   lint:
@@ -21,10 +22,14 @@ jobs:
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew lint
+      - android/restore-build-cache
+      - ruby/install-deps
+      - run: bundle exec fastlane beta
       - android/save-gradle-cache
+      - android/save-build-cache
 
 workflows:
   main:
     jobs:
       - lint
+      - beta
