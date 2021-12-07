@@ -28,6 +28,8 @@ jobs:
       - android/restore-gradle-cache
       - run: ./gradlew testDebugUnitTest
       - android/save-gradle-cache
+      - store_test_results: # Upload Test Results(Test Insights)
+          path: ./app/build/test-results/testDebugUnitTest
 
   integration_test:
     executor:
@@ -35,8 +37,7 @@ jobs:
       resource-class: xlarge
     steps:
       - checkout
-      - android/start-emulator-and-run-tests:
-          system-image: system-images;android-29;default;x86
+      - android/start-emulator-and-run-test
 
   beta:
     executor: docker_executor
