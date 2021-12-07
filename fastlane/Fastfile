@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
   desc "Submit a new Beta Build to Firebase App Distribution"
   lane :beta do
-    gradle(task: "assembleRelease")
+    gradle(task: "assembleDebug")
     firebase_app_distribution(
       app: "1:787598641095:android:d25d2defba93ec69bb7be2"
     )

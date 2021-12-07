@@ -1,37 +1,52 @@
 version: 2.1
 
+# Orbs
 orbs:
   android: circleci/android@1.0.3
   ruby: circleci/ruby@1.2.0
 
-jobs:
-  lint:
+# Executors(DRY)
+executors:
+  docker_executor:
     docker:
       - image: cimg/android:2021.10.2
-    resource_class: xlarge
+    resource_class: xlarge # Resource Class
+
+jobs:
+  lint:
+    executor: docker_executor
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew lint
+      - run: ./gradlew lintDebug
+      - android/save-gradle-cache
+
+  unit_test:
+    executor: docker_executor
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - run: ./gradlew testDebugUnitTest
       - android/save-gradle-cache
 
   beta:
-    docker:
-      - image: cimg/android:2021.10.2
-    resource_class: xlarge
+    executor: docker_executor
     steps:
       - checkout
       - android/restore-gradle-cache
-      - android/restore-build-cache
-      - ruby/install-deps
+      - ruby/install-deps # Ruby(Fastlane)
       - run: bundle exec fastlane beta
       - android/save-gradle-cache
-      - android/save-build-cache
 
 workflows:
   main:
     jobs:
       - lint
+      - unit_test
       - beta:
-          context:
+          context: # Context
             - mobile
+          filters: # Filter Branch
+            branches:
+              only:
+                - master
