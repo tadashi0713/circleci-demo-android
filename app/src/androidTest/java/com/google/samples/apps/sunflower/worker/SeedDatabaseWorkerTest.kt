@@ -38,24 +38,12 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class RefreshMainDataWorkTest {
-    private lateinit var workManager: WorkManager
     private lateinit var context: Context
-    private lateinit var configuration: Configuration
 
     @Before
     fun setup() {
-        // Configure WorkManager
-        configuration = Configuration.Builder()
-            // Set log level to Log.DEBUG to make it easier to debug
-            .setMinimumLoggingLevel(Log.DEBUG)
-            // Use a SynchronousExecutor here to make it easier to write tests
-            .setExecutor(SynchronousExecutor())
-            .build()
-
         // Initialize WorkManager for instrumentation tests.
         context = InstrumentationRegistry.getInstrumentation().targetContext
-        WorkManagerTestInitHelper.initializeTestWorkManager(context, configuration)
-        workManager = WorkManager.getInstance(context)
     }
 
     @Test
