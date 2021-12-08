@@ -33,7 +33,7 @@ jobs:
 
   unit_test_parallel:
     executor: docker_executor
-    parallelism: 2
+    parallelism: 4
     steps:
       - checkout
       - android/restore-gradle-cache
