@@ -1,7 +1,9 @@
 CircleCI Demo Android
 =================
 Demo for CI/CD pipeline for Android Native app using CircleCI.
+
 Forked from [Sunflower App](https://github.com/android/sunflower).
+
 You can see [config file here](https://github.com/tadashi0713/circleci-demo-android/blob/master/.circleci/config.yml).
 
 * Use [Android Orb](https://circleci.com/developer/ja/orbs/orb/circleci/android) to 
