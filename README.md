@@ -10,12 +10,18 @@ You can see [config file here](https://github.com/tadashi0713/circleci-demo-andr
   * Save & restore Gradle cache easily
 * Use [Ruby Orb](https://circleci.com/developer/ja/orbs/orb/circleci/ruby) to install Fastlane with cache easily.
   * Fastlane is used to upload app to [Firebase App Distribution](https://firebase.google.com/docs/app-distribution)
-* Use [Context](https://circleci.com/docs/2.0/contexts/) for storing secrets(this time token for Firebase) for across projects.
-* Upload test results & visualize in [Test Insights](https://circleci.com/docs/2.0/insights-tests/).
 * [Custom resource class](https://circleci.com/docs/ja/2.0/configuration-reference/#resourceclass) to optimise build speed
   * You can see how much resource(CPU and RAM) is used in each jobs in UI page(Available Docker Executors)
 
 ![](./screenshots/cpu_usage.png)
+
+* [Running Unit Tests Parallel](https://circleci.com/docs/2.0/parallelism-faster-jobs/)
+
+
+![](./screenshots/parallel.png)
+
+* Use [Context](https://circleci.com/docs/2.0/contexts/) for storing secrets(this time token for Firebase) for across projects.
+* Upload test results & visualize in [Test Insights](https://circleci.com/docs/2.0/insights-tests/).
 
 Getting Started
 ---------------
