@@ -38,7 +38,7 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - run: |
-            cd src/test/java
+            cd app/src/test/java
             CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
               | sed 's@/@.@g' \
               | sed 's/.kt//' \
@@ -48,6 +48,8 @@ jobs:
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/save-gradle-cache
+      - store_test_results: # Upload Test Results(Test Insights)
+          path: ./app/build/test-results/testDebugUnitTest
 
   integration_test:
     executor:
