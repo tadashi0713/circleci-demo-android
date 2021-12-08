@@ -8,7 +8,7 @@ You can see [config file here](https://github.com/tadashi0713/circleci-demo-andr
 
 * Use [Android Orb](https://circleci.com/developer/ja/orbs/orb/circleci/android) to 
   * Set [Android Machine Executor](https://circleci.com/docs/2.0/android-machine-image/)
-  * Run Espresso tests with Android Emulator easily
+  * Run [Espresso tests with Android Emulator](https://circleci.com/docs/2.0/android-machine-image/) easily
   * Save & restore Gradle cache easily
 * Use [Ruby Orb](https://circleci.com/developer/ja/orbs/orb/circleci/ruby) to install Fastlane with cache easily.
   * Fastlane is used to upload app to [Firebase App Distribution](https://firebase.google.com/docs/app-distribution)
