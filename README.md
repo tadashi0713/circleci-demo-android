@@ -1,7 +1,21 @@
-Android Sunflower
+CircleCI Demo Android
 =================
+Demo for CI/CD pipeline for Android Native app using CircleCI.
+Forked from [Sunflower App](https://github.com/android/sunflower).
+You can see [config file here](https://github.com/tadashi0713/circleci-demo-android/blob/master/.circleci/config.yml).
 
+* Use [Android Orb](https://circleci.com/developer/ja/orbs/orb/circleci/android) to 
+  * Set [Android Machine Executor](https://circleci.com/docs/2.0/android-machine-image/)
+  * Run Espresso tests with Android Emulator easily
+  * Save & restore Gradle cache easily
+* Use [Ruby Orb](https://circleci.com/developer/ja/orbs/orb/circleci/ruby) to install Fastlane with cache easily.
+  * Fastlane is used to upload app to [Firebase App Distribution](https://firebase.google.com/docs/app-distribution)
+* Use [Context](https://circleci.com/docs/2.0/contexts/) for storing secrets(this time token for Firebase) for across projects.
+* Upload test results & visualize in [Test Insights](https://circleci.com/docs/2.0/insights-tests/).
+* [Custom resource class](https://circleci.com/docs/ja/2.0/configuration-reference/#resourceclass) to optimise build speed
+  * You can see how much resource(CPU and RAM) is used in each jobs in UI page(Available Docker Executors)
 
+![](./screenshots/cpu_usage.png)
 
 Getting Started
 ---------------
