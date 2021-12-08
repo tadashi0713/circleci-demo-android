@@ -38,6 +38,8 @@ jobs:
     steps:
       - checkout
       - android/start-emulator-and-run-tests
+      - store_test_results: # Upload Test Results(Test Insights)
+          path: ./app/build/outputs/androidTest-results/connected
 
   beta:
     executor: docker_executor
