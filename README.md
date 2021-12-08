@@ -1,5 +1,7 @@
 CircleCI Demo Android
 =================
+[![CircleCI](https://circleci.com/gh/tadashi0713/circleci-demo-android/tree/master.svg?style=svg)](https://circleci.com/gh/tadashi0713/circleci-demo-android/tree/master)
+
 Demo for CI/CD pipeline for Android Native app using CircleCI.
 
 Forked from [Sunflower App](https://github.com/android/sunflower).
