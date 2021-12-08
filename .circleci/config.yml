@@ -31,6 +31,24 @@ jobs:
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/test-results/testDebugUnitTest
 
+  unit_test_parallel:
+    executor: docker_executor
+    parallelism: 2
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - run: |
+            cd src/test/java
+            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
+              | sed 's@/@.@g' \
+              | sed 's/.kt//' \
+              | circleci tests split --split-by=timings --timings-type=classname)
+            cd ../../..
+            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
+            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
+            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
+      - android/save-gradle-cache
+
   integration_test:
     executor:
       name: android/android-machine # Machine Executor
@@ -55,6 +73,7 @@ workflows:
     jobs:
       - lint
       - unit_test
+      - unit_test_parallel
       - integration_test
       - beta:
           context: # Context
