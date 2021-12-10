@@ -9,7 +9,7 @@ orbs:
 executors:
   docker_executor: # Docker Executor
     docker:
-      - image: cimg/android:2021.12.1
+      - image: cimg/android:2021.10.2
     resource_class: xlarge # Resource Class
 
 jobs:
