@@ -2,7 +2,7 @@ version: 2.1
 
 # Orbs
 orbs:
-  android: circleci/android@1.0.3
+  android: circleci/android@2.0.0
   ruby: circleci/ruby@1.2.0
 
 # Executors(DRY)
@@ -55,6 +55,7 @@ jobs:
     executor:
       name: android/android-machine # Machine Executor
       resource-class: xlarge
+      tag: 2021.12.1
     steps:
       - checkout
       - android/start-emulator-and-run-tests
