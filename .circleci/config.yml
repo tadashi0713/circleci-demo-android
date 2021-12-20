@@ -14,7 +14,10 @@ executors:
 
 jobs:
   lint:
-    executor: docker_executor
+    executor:
+      name: android/android-machine # Machine Executor
+      resource-class: xlarge
+      tag: 2021.10.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -55,7 +58,7 @@ jobs:
     executor:
       name: android/android-machine # Machine Executor
       resource-class: xlarge
-      tag: 2021.12.1
+      tag: 2021.10.1
     steps:
       - checkout
       - android/start-emulator-and-run-tests
