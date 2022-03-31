@@ -18,9 +18,9 @@ buildscript {
     // Define versions in a single place
     ext {
         // Sdk and tools
-        compileSdkVersion = 30
+        compileSdkVersion = 31
         minSdkVersion = 21
-        targetSdkVersion = 30
+        targetSdkVersion = 31
 
         // App dependencies
         appCompatVersion = '1.1.0'
@@ -39,7 +39,7 @@ buildscript {
         ktxVersion = '1.0.2'
         lifecycleVersion = '2.2.0'
         materialVersion = '1.2.0'
-        navigationVersion = '2.3.5'
+        navigationVersion = '2.4.1'
         okhttpLoggingVersion = '4.7.2'
         pagingVersion = '3.0.1'
         retrofitVersion = '2.9.0'
