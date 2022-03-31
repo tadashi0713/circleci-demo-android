@@ -10,7 +10,7 @@ jobs:
     executor:
       name: android/android-docker # Docker Executor
       resource-class: xlarge
-      tag: 2022.3.1
+      tag: 2022.03.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -21,7 +21,7 @@ jobs:
     executor:
       name: android/android-docker # Docker Executor
       resource-class: xlarge
-      tag: 2022.3.1
+      tag: 2022.03.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -34,7 +34,7 @@ jobs:
     executor:
       name: android/android-docker # Docker Executor
       resource-class: xlarge
-      tag: 2022.3.1
+      tag: 2022.03.1
     parallelism: 4
     steps:
       - checkout
@@ -68,7 +68,7 @@ jobs:
     executor:
       name: android/android-docker # Docker Executor
       resource-class: xlarge
-      tag: 2022.3.1
+      tag: 2022.03.1
     steps:
       - checkout
       - android/restore-gradle-cache
