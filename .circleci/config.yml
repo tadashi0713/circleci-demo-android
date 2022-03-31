@@ -86,7 +86,7 @@ workflows:
       - beta:
           context: # Context
             - mobile
-          # filters: # Filter Branch
-          #   branches:
-          #     only:
-          #       - master
+          filters: # Filter Branch
+            branches:
+              only:
+                - master
