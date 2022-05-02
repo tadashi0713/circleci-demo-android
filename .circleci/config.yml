@@ -76,6 +76,12 @@ jobs:
       - run: bundle exec fastlane beta
       - android/save-gradle-cache
 
+  runner-test:
+    machine: true
+    resource_class: tadashi0713/graviton-android
+    steps:
+      - run: echo "Hi I'm on Runners!"
+
 workflows:
   main:
     jobs:
@@ -90,3 +96,4 @@ workflows:
             branches:
               only:
                 - master
+      - runner-test
