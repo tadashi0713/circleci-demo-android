@@ -80,7 +80,8 @@ jobs:
     machine: true
     resource_class: tadashi0713/graviton-android
     steps:
-      - run: echo "Hi I'm on Runners!"
+      - checkout
+      - android/start-emulator-and-run-tests
 
 workflows:
   main:
