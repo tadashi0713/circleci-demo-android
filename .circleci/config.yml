@@ -82,7 +82,9 @@ jobs:
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew lintDebug
+      - run: |
+          source ~/.bashrc
+          ./gradlew lintDebug
       - android/save-gradle-cache
 
   arm-test:
