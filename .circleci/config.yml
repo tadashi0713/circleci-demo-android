@@ -84,6 +84,7 @@ jobs:
       - android/restore-gradle-cache
       - run: |
           source ~/.bashrc
+          echo $ANDROID_SDK_ROOT
           ./gradlew lintDebug
       - android/save-gradle-cache
 
