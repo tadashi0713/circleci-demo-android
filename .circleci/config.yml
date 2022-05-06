@@ -85,6 +85,16 @@ jobs:
       - run: ./gradlew lintDebug
       - android/save-gradle-cache
 
+  arm-test:
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.large
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - run: ./gradlew lintDebug
+      - android/save-gradle-cache
+
 workflows:
   main:
     jobs:
@@ -100,3 +110,4 @@ workflows:
               only:
                 - master
       - runner-test
+      - arm-test
