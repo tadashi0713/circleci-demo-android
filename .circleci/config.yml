@@ -81,7 +81,9 @@ jobs:
     resource_class: tadashi0713/graviton-android
     steps:
       - checkout
-      - android/start-emulator-and-run-tests
+      - android/restore-gradle-cache
+      - run: ./gradlew lintDebug
+      - android/save-gradle-cache
 
 workflows:
   main:
