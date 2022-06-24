@@ -18,9 +18,10 @@ jobs:
       - android/save-gradle-cache
 
   unit_test:
-    docker:
-      - image: cimg/android:2022.06
-    resource_class: tadashi0713/container-agent
+    executor:
+      name: android/android-docker # Docker Executor
+      resource-class: xlarge
+      tag: 2022.03.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -64,10 +65,9 @@ jobs:
           path: ./app/build/outputs/androidTest-results/connected
 
   beta:
-    executor:
-      name: android/android-docker # Docker Executor
-      resource-class: xlarge
-      tag: 2022.03.1
+    docker:
+      - image: cimg/android:2022.06
+    resource_class: tadashi0713/container-agent
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -85,7 +85,3 @@ workflows:
       - beta:
           context: # Context
             - mobile
-          filters: # Filter Branch
-            branches:
-              only:
-                - master
