@@ -2,7 +2,7 @@ version: 2.1
 
 # Orbs
 orbs:
-  android: circleci/android@2.1.0
+  android: circleci/android@2.1.2
   ruby: circleci/ruby@1.8.0
 
 jobs:
