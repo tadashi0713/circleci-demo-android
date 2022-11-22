@@ -9,7 +9,7 @@ jobs:
   lint:
     executor:
       name: android/android-docker # Docker Executor
-      resource-class: 2xlarge
+      resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
@@ -20,7 +20,7 @@ jobs:
   unit_test:
     executor:
       name: android/android-docker # Docker Executor
-      resource-class: 2xlarge
+      resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
@@ -33,7 +33,7 @@ jobs:
   unit_test_parallel:
     executor:
       name: android/android-docker # Docker Executor
-      resource-class: 2xlarge
+      resource-class: xlarge
       tag: 2022.06.1
     parallelism: 4
     steps:
@@ -67,7 +67,7 @@ jobs:
   beta:
     executor:
       name: android/android-docker # Docker Executor
-      resource-class: 2xlarge
+      resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
