@@ -45,7 +45,7 @@ class GardenActivityTest4 {
         // When the "Add Plant" button is clicked
         onView(withId(R.id.add_plant)).perform(click())
 
-        Thread.sleep(40000)
+        // Thread.sleep(40000)
 
         // Then the ViewPager should change to the Plant List page
         onView(withId(R.id.plant_list)).check(matches(isDisplayed()))

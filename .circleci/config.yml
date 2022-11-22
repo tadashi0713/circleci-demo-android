@@ -64,6 +64,35 @@ jobs:
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
 
+  build_for_integration_test:
+    executor:
+      name: android/android-machine # Machine Executor
+      resource-class: xlarge
+      tag: 2022.06.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - run: ./gradlew assembleDebug assembleDebugAndroidTest
+      - android/save-gradle-cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./app/build/outputs/apk
+
+  integration_test_parallel:
+    parallelism: 2
+    executor:
+      name: android/android-machine # Machine Executor
+      resource-class: xlarge
+      tag: 2022.06.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - android/start-emulator-and-run-tests
+      - store_test_results: # Upload Test Results(Test Insights)
+          path: ./app/build/outputs/androidTest-results/connected
+
   beta:
     executor:
       name: android/android-docker # Docker Executor
@@ -83,6 +112,10 @@ workflows:
       - unit_test
       - unit_test_parallel
       - integration_test
+      - build_for_integration_test
+      - integration_test_parallel:
+          requires:
+            - build_for_integration_test
       - beta:
           context: # Context
             - mobile
