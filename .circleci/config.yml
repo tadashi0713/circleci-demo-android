@@ -72,12 +72,12 @@ jobs:
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew assembleDebug assembleDebugAndroidTest
+      - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
       - persist_to_workspace:
           root: .
           paths:
-            - ./app/build/outputs/apk
+            - ./app/build/
 
   integration_test_parallel:
     parallelism: 2
