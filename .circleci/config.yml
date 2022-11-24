@@ -89,8 +89,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-#      - run: ./gradlew assembleDebugAndroidTest
-      - android/start-emulator-and-run-tests
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ""
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
 
