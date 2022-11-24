@@ -72,8 +72,10 @@ jobs:
     steps:
       - checkout
       - android/restore-gradle-cache
+      - android/restore-build-cache
       - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
+      - android/save-build-cache
       - persist_to_workspace:
           root: .
           paths:
@@ -89,6 +91,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - android/restore-build-cache
       - android/start-emulator-and-run-tests
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
