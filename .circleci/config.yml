@@ -77,7 +77,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./
+            - ./app/build/
 
   integration_test_parallel:
     parallelism: 2
@@ -88,7 +88,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./app/build/
+          at: .
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ""
       - store_test_results: # Upload Test Results(Test Insights)
