@@ -72,7 +72,7 @@ jobs:
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew assembleDebugAndroidTest
+      - run: ./gradlew assembleDebug assembleDebugAndroidTest
       - android/save-gradle-cache
       - persist_to_workspace:
           root: .
@@ -87,8 +87,8 @@ jobs:
       tag: 2022.06.1
     steps:
       - checkout
-#      - attach_workspace:
-#          at: .
+      - attach_workspace:
+          at: .
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ""
       - store_test_results: # Upload Test Results(Test Insights)
