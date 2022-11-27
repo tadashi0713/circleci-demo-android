@@ -104,7 +104,7 @@ jobs:
       - android/create-avd:
           avd-name: test
           install: true
-          system-image: "system-images;android-33;default;x86"
+          system-image: system-images;android-29;default;x86
       - android/start-emulator:
           avd-name: test
           post-emulator-launch-assemble-command: ""
