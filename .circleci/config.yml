@@ -1,6 +1,5 @@
 version: 2.1
 
-# Orbs
 orbs:
   android: circleci/android@2.1.2
   ruby: circleci/ruby@2.0.0
@@ -8,7 +7,7 @@ orbs:
 jobs:
   lint:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-docker
       resource-class: xlarge
       tag: 2022.06.1
     steps:
@@ -19,7 +18,7 @@ jobs:
 
   unit_test:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-docker
       resource-class: xlarge
       tag: 2022.06.1
     steps:
@@ -27,12 +26,12 @@ jobs:
       - android/restore-gradle-cache
       - run: ./gradlew testDebugUnitTest
       - android/save-gradle-cache
-      - store_test_results: # Upload Test Results(Test Insights)
+      - store_test_results:
           path: ./app/build/test-results/testDebugUnitTest
 
   unit_test_parallel:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-docker
       resource-class: xlarge
       tag: 2022.06.1
     parallelism: 2
@@ -50,29 +49,29 @@ jobs:
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/save-gradle-cache
-      - store_test_results: # Upload Test Results(Test Insights)
+      - store_test_results:
           path: ./app/build/test-results/testDebugUnitTest
 
   integration_test:
     executor:
-      name: android/android-machine # Machine Executor
+      name: android/android-machine
       resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
       - android/start-emulator-and-run-tests
-      - store_test_results: # Upload Test Results(Test Insights)
+      - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
 
   build_for_integration_test:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-machine
       resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew assembleDebug assembleDebugAndroidTest
+      - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
       - persist_to_workspace:
           root: .
@@ -82,48 +81,39 @@ jobs:
   integration_test_parallel:
     parallelism: 2
     executor:
-      name: android/android-machine # Machine Executor
+      name: android/android-machine
       resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
       - attach_workspace:
           at: .
-#      - run:
-#          name: Split Espresso tests
-#          command: |
-#            cd app/src/androidTest/java
-#            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
-#              | sed 's@/@.@g' \
-#              | sed 's/.kt//' \
-#              | circleci tests split --split-by=timings --timings-type=classname)
-#            cd ../../../../
-#            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
-#            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-#            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
-      - android/create-avd:
-          avd-name: test
-          install: true
-          system-image: system-images;android-29;default;x86
-      - android/start-emulator:
-          avd-name: test
-          post-emulator-launch-assemble-command: ""
       - run:
-          name: Install app and tests to an emulator
-          command: ./gradlew installDebug installDebugAndroidTest
-      - run: adb shell am instrument -w com.google.samples.apps.sunflower.test/com.google.samples.apps.sunflower.utilities.MainTestRunner
-      - store_test_results: # Upload Test Results(Test Insights)
+          name: Split Espresso tests
+          command: |
+            cd app/src/androidTest/java
+            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
+              | sed 's@/@.@g' \
+              | sed 's/.kt//' \
+              | circleci tests split --split-by=timings --timings-type=classname)
+            cd ../../../../
+            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
+            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
+#            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew connectedDebugAndroidTest
+      - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
 
   beta:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-docker
       resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
       - android/restore-gradle-cache
-      - ruby/install-deps # Ruby(Fastlane)
+      - ruby/install-deps
       - run: bundle exec fastlane beta
       - android/save-gradle-cache
 
@@ -139,9 +129,9 @@ workflows:
           requires:
             - build_for_integration_test
       - beta:
-          context: # Context
+          context:
             - mobile
-          filters: # Filter Branch
+          filters:
             branches:
               only:
                 - master
