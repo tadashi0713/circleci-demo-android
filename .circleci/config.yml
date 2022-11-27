@@ -66,13 +66,13 @@ jobs:
 
   build_for_integration_test:
     executor:
-      name: android/android-machine # Machine Executor
+      name: android/android-docker # Docker Executor
       resource-class: xlarge
       tag: 2022.06.1
     steps:
       - checkout
       - android/restore-gradle-cache
-      - run: ./gradlew assembleDebugAndroidTest
+      - run: ./gradlew assembleDebug assembleDebugAndroidTest
       - android/save-gradle-cache
       - persist_to_workspace:
           root: .
@@ -89,20 +89,29 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run:
-          name: Split Espresso tests
-          command: |
-            cd app/src/androidTest/java
-            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
-              | sed 's@/@.@g' \
-              | sed 's/.kt//' \
-              | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
+#      - run:
+#          name: Split Espresso tests
+#          command: |
+#            cd app/src/androidTest/java
+#            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
+#              | sed 's@/@.@g' \
+#              | sed 's/.kt//' \
+#              | circleci tests split --split-by=timings --timings-type=classname)
+#            cd ../../../../
+#            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
+#            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
 #            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
-      - android/start-emulator-and-run-tests:
+      - android/create-avd:
+          avd-name: test
+          install: true
+          system-image: "system-images;android-33;default;x86"
+      - android/start-emulator:
+          avd-name: test
           post-emulator-launch-assemble-command: ""
+      - run:
+          name: Install app and tests to an emulator
+          command: ./gradlew installDebug installDebugAndroidTest
+      - run: adb shell am instrument -w com.google.samples.apps.sunflower.test/com.google.samples.apps.sunflower.utilities.MainTestRunner
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
 
