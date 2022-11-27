@@ -19,7 +19,7 @@ jobs:
 
   unit_test:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android-docker # Docker Executo
       resource-class: xlarge
       tag: 2022.06.1
     steps:
