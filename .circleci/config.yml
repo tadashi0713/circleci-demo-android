@@ -91,19 +91,20 @@ jobs:
           name: Split Espresso tests
           command: |
             cd app/src/androidTest/java
-            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
+            classnames=$(circleci tests glob "**/*Test.kt" \
               | sed 's@/@.@g' \
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
+            gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
+            echo "Prepared arguments for Gradle: $gradle_args"
+            echo 'export $GRADLE_ARGS=$gradle_args' >> "$BASH_ENV"
 #            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ""
-          test-command: ./gradlew connectedDebugAndroidTest
-#      - store_test_results:
-#          path: ./app/build/outputs/androidTest-results/connected
+          test-command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
+      - store_test_results:
+          path: ./app/build/outputs/androidTest-results/connected
 
   beta:
     executor:
