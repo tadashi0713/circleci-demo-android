@@ -74,9 +74,8 @@ jobs:
       - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
       - persist_to_workspace:
-          root: .
-          paths:
-            - ./
+          root: ~/
+          paths: .
 
   integration_test_parallel:
     parallelism: 2
@@ -87,7 +86,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: ~/
       - run:
           name: Split Espresso tests
           command: |
@@ -100,10 +99,10 @@ jobs:
             GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
 #            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
-      - android/start-emulator-and-run-tests:
-          test-command: ./gradlew connectedDebugAndroidTest
-      - store_test_results:
-          path: ./app/build/outputs/androidTest-results/connected
+#      - android/start-emulator-and-run-tests:
+#          test-command: ./gradlew connectedDebugAndroidTest
+#      - store_test_results:
+#          path: ./app/build/outputs/androidTest-results/connected
 
   beta:
     executor:
