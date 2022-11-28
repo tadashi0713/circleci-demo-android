@@ -65,7 +65,7 @@ jobs:
 
   build_for_integration_test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: xlarge
       tag: 2022.09.1
     steps:
