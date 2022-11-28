@@ -102,7 +102,7 @@ jobs:
 #            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ""
-          test-command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
+          test-command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS -Pcircleci
       - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
 
