@@ -81,7 +81,7 @@ jobs:
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
             echo "classnames: $classnames"
-            gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "-Pandroid.testInstrumentationRunnerArguments.class=${i}"}')
+            gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "-Pandroid.testInstrumentationRunnerArguments.class="$i}')
             echo "Prepared arguments for Gradle: $gradle_args"
             echo 'export GRADLE_ARGS=$gradle_args' >> "$BASH_ENV"
       - run: ./gradlew assembleDebugAndroidTest
