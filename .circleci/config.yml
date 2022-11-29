@@ -98,7 +98,7 @@ jobs:
             cd ../../../../
             gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "-Pandroid.testInstrumentationRunnerArguments.class="$i}')
             echo "Prepared arguments for Gradle: $gradle_args"
-            echo 'export GRADLE_ARGS=$gradle_args' >> "$BASH_ENV"
+            echo "export GRADLE_ARGS=$gradle_args" >> $BASH_ENV
       - run: echo $GRADLE_ARGS
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ""
