@@ -70,18 +70,6 @@ jobs:
       tag: 2022.09.1
     steps:
       - checkout
-      - run:
-          name: Split Espresso tests
-          command: |
-            cd app/src/androidTest/java
-            classnames=$(circleci tests glob "**/*Test.kt" \
-              | sed 's@/@.@g' \
-              | sed 's/.kt//' \
-              | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../../../
-            gradle_args=$(echo $classnames | sed -z 's/\n//g; s/ /,/g' )
-            echo "Prepared arguments for Gradle: $gradle_args"
-            echo "export GRADLE_ARGS='$gradle_args'" >> $BASH_ENV
       - android/restore-gradle-cache
       - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
@@ -108,9 +96,9 @@ jobs:
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "-Pandroid.testInstrumentationRunnerArguments.class="$i}')
+            gradle_args=$(echo $classnames | sed -z 's/\n//g; s/ /,/g' )
             echo "Prepared arguments for Gradle: $gradle_args"
-            echo "export GRADLE_ARGS='$gradle_args'" >> $BASH_ENV
+            echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$gradle_args'" >> $BASH_ENV
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: echo $GRADLE_ARGS
           test-command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
