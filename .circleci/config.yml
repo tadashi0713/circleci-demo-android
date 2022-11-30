@@ -99,7 +99,16 @@ jobs:
             gradle_args=$(echo $classnames | sed -z 's/\n//g; s/ /,/g')
             echo "Prepared arguments for Gradle: $gradle_args"
             echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$gradle_args'" >> $BASH_ENV
-            echo "Prepared arguments for Gradlwe: $GRADLE_ARGS"
+      - android/create-avd:
+          avd-name: test
+          install: true
+          system-image: "system-images;android-29;default;x86"
+      - android/start-emulator:
+          avd-name: test
+          post-emulator-launch-assemble-command: ""
+      - run:
+          name: Run Espresso tests
+          command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
       - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
 
