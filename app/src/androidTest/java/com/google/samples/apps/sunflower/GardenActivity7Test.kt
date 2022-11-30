@@ -29,7 +29,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 
 @HiltAndroidTest
-class GardenActivityTest7 {
+class GardenActivity7Test {
 
     private val hiltRule = HiltAndroidRule(this)
     private val activityTestRule = ActivityTestRule(GardenActivity::class.java)

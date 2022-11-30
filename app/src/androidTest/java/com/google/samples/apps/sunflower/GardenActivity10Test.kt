@@ -29,7 +29,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 
 @HiltAndroidTest
-class GardenActivityTest2 {
+class GardenActivity10Test {
 
     private val hiltRule = HiltAndroidRule(this)
     private val activityTestRule = ActivityTestRule(GardenActivity::class.java)
@@ -45,7 +45,7 @@ class GardenActivityTest2 {
         // When the "Add Plant" button is clicked
         onView(withId(R.id.add_plant)).perform(click())
 
-        Thread.sleep(20000)
+        Thread.sleep(100000)
 
         // Then the ViewPager should change to the Plant List page
         onView(withId(R.id.plant_list)).check(matches(isDisplayed()))
