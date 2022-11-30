@@ -70,6 +70,18 @@ jobs:
       tag: 2022.09.1
     steps:
       - checkout
+      - run:
+          name: Split Espresso tests
+          command: |
+            cd app/src/androidTest/java
+            classnames=$(circleci tests glob "**/*Test.kt" \
+              | sed 's@/@.@g' \
+              | sed 's/.kt//' \
+              | circleci tests split --split-by=timings --timings-type=classname)
+            cd ../../../../
+            gradle_args=$(echo $CLASSNAMES | sed -e 's/ /,/g')
+            echo "Prepared arguments for Gradle: $gradle_args"
+            echo "export GRADLE_ARGS='$gradle_args'" >> $BASH_ENV
       - android/restore-gradle-cache
       - run: ./gradlew assembleDebugAndroidTest
       - android/save-gradle-cache
