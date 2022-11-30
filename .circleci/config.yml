@@ -79,7 +79,7 @@ jobs:
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            gradle_args=$(echo $CLASSNAMES | sed -e 's/ /,/g')
+            gradle_args=$(echo $classnames | awk '{for (i=1; i<=NF; i++) print "%s,"$i}')
             echo "Prepared arguments for Gradle: $gradle_args"
             echo "export GRADLE_ARGS='$gradle_args'" >> $BASH_ENV
       - android/restore-gradle-cache
