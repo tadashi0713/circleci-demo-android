@@ -78,7 +78,7 @@ jobs:
           paths: .
 
   integration_test_parallel:
-    parallelism: 3
+    parallelism: 4
     executor:
       name: android/android-machine
       resource-class: xlarge
