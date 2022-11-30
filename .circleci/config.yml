@@ -96,7 +96,7 @@ jobs:
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            gradle_args=$(echo $classnames | sed -z 's/\n//g; s/ /,/g' )
+            gradle_args=$(echo $classnames | sed -z 's/\n//g; s/$/\n/; s/ /,/g' )
             echo "Prepared arguments for Gradle: $gradle_args"
             echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$gradle_args'" >> $BASH_ENV
       - android/start-emulator-and-run-tests:
