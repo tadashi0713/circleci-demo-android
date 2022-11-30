@@ -100,7 +100,7 @@ jobs:
             echo "Prepared arguments for Gradle: $gradle_args"
             echo "export GRADLE_ARGS='$gradle_args'" >> $BASH_ENV
       - android/start-emulator-and-run-tests:
-          post-emulator-launch-assemble-command: ""
+          post-emulator-launch-assemble-command: echo $GRADLE_ARGS
           test-command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
       - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
