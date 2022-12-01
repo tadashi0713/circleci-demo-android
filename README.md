@@ -22,10 +22,12 @@ You can see [config file here](https://github.com/tadashi0713/circleci-demo-andr
 * Use [Context](https://circleci.com/docs/2.0/contexts/) for storing secrets(this time token for Firebase) for across projects.
 * Upload test results & visualize in [Test Insights](https://circleci.com/docs/2.0/insights-tests/).
 
-Getting Started
+Test splitting and parallelism of Android UITests(Espresso) using Android Emulators on CircleCI
 ---------------
 
-This demo includes UITests(Espresso), which need to be run on Android devices or emulators. 
+This demo includes UITests(Espresso), which need to be run on either Android devices or emulators.
+
+I added sleep(`Thread.sleep()`) on purpose randomly to make each tests execution time sparsely.
 
 ```kt
 class GardenActivity3Test {
@@ -41,6 +43,8 @@ class GardenActivity3Test {
 }
 ```
 
+If you just want to run these Espresso tests on Android Emulators, you can easily create CircleCI pipeline using [Android Orb](https://circleci.com/developer/orbs/orb/circleci/android).
+
 ```yml
 integration_test:
   executor:
@@ -54,17 +58,27 @@ integration_test:
         path: ./app/build/outputs/androidTest-results/connected
 ```
 
-`android/start-emulator-and-run-tests` includes following steps
-
+`android/start-emulator-and-run-tests` includes following steps:
 * Create & launch Android Emulator
 * Restore Gradle cache
-* (`./gradlew assembleDebugAndroidTest`)
-* Wait for Android Emulator to 
+* Build for testing(`./gradlew assembleDebugAndroidTest`)
+* Wait for Android Emulator to start
 * Run tests(`./gradlew connectedDebugAndroidTest`)
 
-### Build for Testing
+However, since UITests takes time, you want to split these tests and run them in multiple Android emulators.
 
-It's 
+To run these tests in parallel using CircleCI, follow these steps:
+* Pre-build (assembleAndroidTest) to run Espresso tests
+* Launch multiple Linux VMs/Android emulators
+* Split tests based on execution time
+* Run split tests in parallel
+* Upload test results which include execution time
+
+### Pre-build (assembleAndroidTest)
+
+All Android application tests, including UI tests, must be built before running.
+
+`build_for_integration_test` job pre-build using `./gradlew assembleDebugAndroidTest` command in order to run the tests in parallel on multiple Android emulators later on.
 
 ```yml
 build_for_integration_test:
@@ -82,9 +96,9 @@ build_for_integration_test:
         paths: .
 ```
 
-### 
+### Test splitting and parallelism of UITests(Espresso)
 
-This is job to split 
+`integration_test_parallel` splits UITests(Espresso) and runs in parallel.
 
 ```yml
 integration_test_parallel:
@@ -105,7 +119,6 @@ integration_test_parallel:
             | sed 's@/@.@g' \
             | sed 's/.kt//' \
             | circleci tests split --split-by=timings --timings-type=classname)
-          cd ../../../../
           echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$(echo $CLASSNAMES | sed -z "s/\n//g; s/ /,/g")'" >> $BASH_ENV
     - android/create-avd:
         avd-name: test
@@ -121,13 +134,28 @@ integration_test_parallel:
         path: ./app/build/outputs/androidTest-results/connected
 ```
 
-If you want to run specific Espresso tests, 
+If you want to run specific UITests(Espresso), you need to add following Gradle args.
 
 ```shell
 ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.google.samples.apps.sunflower.GardenActivity1Test,com.google.samples.apps.sunflower.GardenActivity2Test
 ```
 
-In order to 
+Therefore, below script glob test files, process to classname, and process to Gradle args.
+
+```sh
+cd app/src/androidTest/java
+CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
+  | sed 's@/@.@g' \
+  | sed 's/.kt//' \
+  | circleci tests split --split-by=timings --timings-type=classname)
+echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$(echo $CLASSNAMES | sed -z "s/\n//g; s/ /,/g")'" >> $BASH_ENV
+```
+
+After launch Android emulators, we will add this Gradle args.
+
+`post-emulator-launch-assemble-command` can be blank since we already pre-build in previous job.
+
+### Result
 
 ![](https://user-images.githubusercontent.com/8651308/204975115-41b42495-e037-4070-bf68-34c5f1b85957.png)
 ![](https://user-images.githubusercontent.com/8651308/204975245-765b325c-8206-44b0-a621-247419f1c701.png)
