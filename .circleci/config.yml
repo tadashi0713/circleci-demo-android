@@ -55,7 +55,7 @@ jobs:
           paths: .
 
   integration_test_parallel:
-    parallelism: 6
+    parallelism: 8
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -72,7 +72,6 @@ jobs:
               | sed 's@/@.@g' \
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../../../
             echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$(echo $CLASSNAMES | sed -z "s/\n//g; s/ /,/g")'" >> $BASH_ENV
       - android/create-avd:
           avd-name: test
