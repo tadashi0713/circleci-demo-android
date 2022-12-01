@@ -29,29 +29,6 @@ jobs:
       - store_test_results:
           path: ./app/build/test-results/testDebugUnitTest
 
-  unit_test_parallel:
-    executor:
-      name: android/android-docker
-      resource-class: xlarge
-      tag: 2022.09.1
-    parallelism: 2
-    steps:
-      - checkout
-      - android/restore-gradle-cache
-      - run: |
-            cd app/src/test/java
-            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
-              | sed 's@/@.@g' \
-              | sed 's/.kt//' \
-              | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
-      - android/save-gradle-cache
-      - store_test_results:
-          path: ./app/build/test-results/testDebugUnitTest
-
   integration_test:
     executor:
       name: android/android-machine
@@ -78,7 +55,7 @@ jobs:
           paths: .
 
   integration_test_parallel:
-    parallelism: 4
+    parallelism: 6
     executor:
       name: android/android-machine
       resource-class: xlarge
