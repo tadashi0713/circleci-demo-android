@@ -104,7 +104,6 @@ workflows:
     jobs:
       - lint
       - unit_test
-      - unit_test_parallel
       - integration_test
       - build_for_integration_test
       - integration_test_parallel:
