@@ -29,7 +29,7 @@ buildscript {
         coroutinesVersion = "1.6.4"
         espressoVersion = '3.5.1'
         fragmentVersion = '1.5.5'
-        glideVersion = '4.14.2'
+        glideVersion = '4.15.0'
         gradleVersion = '7.4.1'
         gsonVersion = '2.10.1'
         hiltVersion = '2.45'
