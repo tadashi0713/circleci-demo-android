@@ -40,7 +40,7 @@ buildscript {
         lifecycleVersion = '2.2.0'
         materialVersion = '1.9.0'
         navigationVersion = '2.5.3'
-        okhttpLoggingVersion = '4.10.0'
+        okhttpLoggingVersion = '4.11.0'
         pagingVersion = '3.1.1'
         retrofitVersion = '2.9.0'
         roomVersion = '2.5.1'
