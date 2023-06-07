@@ -28,7 +28,7 @@ buildscript {
         coreTestingVersion = '2.2.0'
         coroutinesVersion = "1.7.1"
         espressoVersion = '3.5.1'
-        fragmentVersion = '1.5.7'
+        fragmentVersion = '1.6.0'
         glideVersion = '4.15.1'
         gradleVersion = '7.4.2'
         gsonVersion = '2.10.1'
