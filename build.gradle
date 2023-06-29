@@ -26,7 +26,7 @@ buildscript {
         appCompatVersion = '1.6.1'
         constraintLayoutVersion = '2.1.4'
         coreTestingVersion = '2.2.0'
-        coroutinesVersion = "1.7.1"
+        coroutinesVersion = "1.7.2"
         espressoVersion = '3.5.1'
         fragmentVersion = '1.6.0'
         glideVersion = '4.15.1'
