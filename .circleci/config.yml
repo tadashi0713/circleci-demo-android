@@ -108,6 +108,25 @@ jobs:
             -u "$CIRCLE_API_TOKEN:")
             echo "export ARTIFACT_URL=$(echo $artifacts | jq '.items[0].url')" >> $BASH_ENV
       - run: echo $ARTIFACT_URL
+      - run: |
+          cat << EOT > time.html
+          <!DOCTYPE html>
+          <HTML lang="ja">
+          <meta charset="UTF-8">
+          <HEAD>
+          <TITLE>日本の現在時刻</TITLE>
+          </HEAD>
+          <BODY>
+          日本の現在時刻は、
+          <BR>
+          `date`
+          <BR>
+          です。
+          </BODY>
+          </HTML>
+          EOT
+      - store_artifacts:
+          path: time.html
 workflows:
   main:
     jobs:
