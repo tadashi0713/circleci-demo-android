@@ -109,22 +109,35 @@ jobs:
             echo "export ARTIFACT_URL=$(echo $artifacts | jq '.items[0].url')" >> $BASH_ENV
       - run: echo $ARTIFACT_URL
       - run: |
-          cat << EOT > time.html
+          cat <<EOF > index.html 
           <!DOCTYPE html>
-          <HTML lang="ja">
-          <meta charset="UTF-8">
-          <HEAD>
-          <TITLE>日本の現在時刻</TITLE>
-          </HEAD>
-          <BODY>
-          日本の現在時刻は、
-          <BR>
-          `date`
-          <BR>
-          です。
-          </BODY>
-          </HTML>
-          EOT
+          <html lang="ja">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="X-UA-Compatible" content="ie=edge">
+              <link rel="stylesheet" href="css/normalize.css">
+              <link rel="stylesheet" href="css/style.css">
+              <title>$1</title>
+          </head>
+          <body>
+              <header>
+                  <p>ヘッダー</p>
+              </header>
+              　<div class="description">
+              　　<h1>$1</h1>
+                  <p>本サイトはshellスクリプトで自動作成されています。<br>
+                      jsフォルダ、cssフォルダを作成しています。<br>htmlのbody内の記述、cssフォルダ内のstyle.cssファイルは必要に応じて削除してください。<br>
+                      <a href="https://necolas.github.io/normalize.css/">こちら</a>よりCSSのnomalize.cssを読みこんでいます。<br>
+                  </p>
+              　</div>
+              <footer>
+                  <p>フッター</p>
+              </footer>
+          </body>
+          </html>
+EOF
+
       - store_artifacts:
           path: time.html
 workflows:
