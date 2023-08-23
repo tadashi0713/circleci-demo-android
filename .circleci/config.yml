@@ -139,7 +139,7 @@ jobs:
 EOF
 
       - store_artifacts:
-          path: time.html
+          path: index.html
 workflows:
   main:
     jobs:
