@@ -97,49 +97,7 @@ jobs:
       - ruby/install-deps
       - run: bundle exec fastlane beta
       - android/save-gradle-cache
-      - store_artifacts:
-          path: app/build/outputs/apk/debug/app-debug.apk
-      - run:
-          name: Get artifacts
-          command: |
-            project_slug=$(echo "$CIRCLE_BUILD_URL" | sed -e "s|https://circleci.com/||g" -e "s|/[0-9]*$||g")
-            artifacts=$(curl -X GET "https://circleci.com/api/v2/project/$project_slug/$CIRCLE_BUILD_NUM/artifacts" \
-            -H "Accept: application/json" \
-            -u "$CIRCLE_API_TOKEN:")
-            echo "export ARTIFACT_URL=$(echo $artifacts | jq '.items[0].url')" >> $BASH_ENV
-      - run: echo $ARTIFACT_URL
-      - run: |
-          cat <<EOF > index.html 
-          <!DOCTYPE html>
-          <html lang="ja">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <meta http-equiv="X-UA-Compatible" content="ie=edge">
-              <link rel="stylesheet" href="css/normalize.css">
-              <link rel="stylesheet" href="css/style.css">
-              <title>$1</title>
-          </head>
-          <body>
-              <header>
-                  <p>ヘッダー</p>
-              </header>
-              　<div class="description">
-              　　<h1>$1</h1>
-                  <p>本サイトはshellスクリプトで自動作成されています。<br>
-                      jsフォルダ、cssフォルダを作成しています。<br>htmlのbody内の記述、cssフォルダ内のstyle.cssファイルは必要に応じて削除してください。<br>
-                      <a href="https://necolas.github.io/normalize.css/">こちら</a>よりCSSのnomalize.cssを読みこんでいます。<br>
-                  </p>
-              　</div>
-              <footer>
-                  <p>フッター</p>
-              </footer>
-          </body>
-          </html>
-EOF
 
-      - store_artifacts:
-          path: index.html
 workflows:
   main:
     jobs:
