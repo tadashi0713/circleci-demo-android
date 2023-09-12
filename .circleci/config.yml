@@ -9,7 +9,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.07.1
+      tag: 2023.09.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -20,7 +20,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.07.1
+      tag: 2023.09.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -90,7 +90,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.07.1
+      tag: 2023.09.1
     steps:
       - checkout
       - android/restore-gradle-cache
