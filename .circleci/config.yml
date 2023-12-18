@@ -100,6 +100,7 @@ jobs:
       - android/save-gradle-cache
       - app-distribution/upload_android:
           path: app/build/outputs/apk/debug/app-debug.apk
+          build_tools_version: 33.0.1
 
 workflows:
   main:
