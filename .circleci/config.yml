@@ -10,7 +10,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.09.1
+      tag: 2023.11.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -21,7 +21,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.09.1
+      tag: 2023.11.1
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -34,7 +34,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: xlarge
-      tag: 2023.09.1
+      tag: 2023.11.1
     steps:
       - checkout
       - android/start-emulator-and-run-tests
@@ -45,7 +45,7 @@ jobs:
   #   executor:
   #     name: android/android-machine
   #     resource-class: xlarge
-  #     tag: 2023.09.1
+  #     tag: 2023.11.1
   #   steps:
   #     - checkout
   #     - android/restore-gradle-cache
@@ -60,7 +60,7 @@ jobs:
   #   executor:
   #     name: android/android-machine
   #     resource-class: xlarge
-  #     tag: 2023.09.1
+  #     tag: 2023.11.1
   #   steps:
   #     - checkout
   #     - attach_workspace:
@@ -91,7 +91,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: xlarge
-      tag: 2023.09.1
+      tag: 2023.11.1
     steps:
       - checkout
       - android/restore-gradle-cache
