@@ -43,7 +43,7 @@ buildscript {
         okhttpLoggingVersion = '4.12.0'
         pagingVersion = '3.2.1'
         retrofitVersion = '2.9.0'
-        roomVersion = '2.5.2'
+        roomVersion = '2.6.1'
         runnerVersion = '1.0.1'
         truthVersion = '1.2.0'
         testExtJunit = '1.1.5'
