@@ -45,7 +45,7 @@ buildscript {
         retrofitVersion = '2.9.0'
         roomVersion = '2.5.2'
         runnerVersion = '1.0.1'
-        truthVersion = '1.1.5'
+        truthVersion = '1.2.0'
         testExtJunit = '1.1.5'
         uiAutomatorVersion = '2.2.0'
         viewPagerVersion = '1.0.0'
