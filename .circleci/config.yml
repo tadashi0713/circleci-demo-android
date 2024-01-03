@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.3.0
+  android: circleci/android@2.4.0
   ruby: circleci/ruby@2.1.0
   app-distribution: tadashi0713/app-distribution@0.3.0
 
