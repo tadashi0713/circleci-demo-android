@@ -41,52 +41,6 @@ jobs:
       - store_test_results:
           path: ./app/build/outputs/androidTest-results/connected
 
-  # build_for_integration_test:
-  #   executor:
-  #     name: android/android-machine
-  #     resource-class: xlarge
-  #     tag: 2023.11.1
-  #   steps:
-  #     - checkout
-  #     - android/restore-gradle-cache
-  #     - run: ./gradlew assembleDebugAndroidTest
-  #     - android/save-gradle-cache
-  #     - persist_to_workspace:
-  #         root: ~/
-  #         paths: .
-
-  # integration_test_parallel:
-  #   parallelism: 6
-  #   executor:
-  #     name: android/android-machine
-  #     resource-class: xlarge
-  #     tag: 2023.11.1
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Split Espresso tests
-  #         command: |
-  #           cd app/src/androidTest/java
-  #           CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
-  #             | sed 's@/@.@g' \
-  #             | sed 's/.kt//' \
-  #             | circleci tests split --split-by=timings --timings-type=classname)
-  #           echo "export GRADLE_ARGS='-Pandroid.testInstrumentationRunnerArguments.class=$(echo $CLASSNAMES | sed -z "s/\n//g; s/ /,/g")'" >> $BASH_ENV
-  #     - android/create-avd:
-  #         avd-name: test
-  #         install: true
-  #         system-image: "system-images;android-29;default;x86"
-  #     - android/start-emulator:
-  #         avd-name: test
-  #         post-emulator-launch-assemble-command: ""
-  #     - run:
-  #         name: Run Espresso tests
-  #         command: ./gradlew connectedDebugAndroidTest $GRADLE_ARGS
-  #     - store_test_results:
-  #         path: ./app/build/outputs/androidTest-results/connected
-
   beta:
     executor:
       name: android/android-docker
@@ -100,6 +54,9 @@ jobs:
       - android/save-gradle-cache
       - app-distribution/upload_android:
           path: app/build/outputs/apk/debug/app-debug.apk
+      - app-distribution/comment_github_pr
+      - app-distribution/notify_slack:
+          channel: test
 
 workflows:
   main:
@@ -107,10 +64,7 @@ workflows:
       - lint
       - unit_test
       - integration_test
-      # - build_for_integration_test
-      # - integration_test_parallel:
-      #     requires:
-      #       - build_for_integration_test
       - beta:
           context:
             - mobile
+            - app-distribution
