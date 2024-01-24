@@ -55,8 +55,6 @@ jobs:
       - app-distribution/upload_android:
           path: app/build/outputs/apk/debug/app-debug.apk
       - app-distribution/comment_github_pr
-      - app-distribution/notify_slack:
-          channel: test
 
 workflows:
   main:
