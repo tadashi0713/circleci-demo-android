@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   android: circleci/android@2.4.0
   ruby: circleci/ruby@2.1.1
-  app-distribution: tadashi0713/app-distribution@1.0.13
+  app-distribution: tadashi0713/app-distribution@1.1.0
 
 jobs:
   lint:
