@@ -42,7 +42,7 @@ buildscript {
         navigationVersion = '2.7.7'
         okhttpLoggingVersion = '4.12.0'
         pagingVersion = '3.2.1'
-        retrofitVersion = '2.10.0'
+        retrofitVersion = '2.11.0'
         roomVersion = '2.6.1'
         runnerVersion = '1.0.1'
         truthVersion = '1.4.2'
