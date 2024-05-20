@@ -31,7 +31,7 @@ buildscript {
         fragmentVersion = '1.7.1'
         glideVersion = '4.16.0'
         gradleVersion = '8.2.2'
-        gsonVersion = '2.10.1'
+        gsonVersion = '2.11.0'
         hiltVersion = '2.51.1'
         junitVersion = '4.13.2'
         kotlinVersion = '1.9.24'
