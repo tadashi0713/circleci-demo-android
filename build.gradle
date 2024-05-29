@@ -23,7 +23,7 @@ buildscript {
         targetSdkVersion = 34
 
         // App dependencies
-        appCompatVersion = '1.6.1'
+        appCompatVersion = '1.7.0'
         constraintLayoutVersion = '2.1.4'
         coreTestingVersion = '2.2.0'
         coroutinesVersion = "1.8.1"
