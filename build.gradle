@@ -49,7 +49,7 @@ buildscript {
         testExtJunit = '1.2.1'
         uiAutomatorVersion = '2.3.0'
         viewPagerVersion = '1.1.0'
-        workVersion = '2.9.0'
+        workVersion = '2.9.1'
     }
 
     repositories {
