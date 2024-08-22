@@ -34,7 +34,7 @@ buildscript {
         gsonVersion = '2.11.0'
         hiltVersion = '2.52'
         junitVersion = '4.13.2'
-        kotlinVersion = '1.9.25'
+        kotlinVersion = '2.0.20'
         ktlintVersion = '0.38.1'
         ktxVersion = '1.13.1'
         lifecycleVersion = '2.2.0'
